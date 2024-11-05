@@ -4,14 +4,12 @@ import { CamelCasePlugin, Kysely } from "kysely";
 import { DB } from "../../lib/db-types";
 import { dialect } from "../../lib/db";
 import { redirect } from "next/navigation";
+import { createDb } from "../../lib/createDb";
 
 export async function createPost(content: string) {
   console.log(`Creating post with text: ${content}`);
 
-  const db = new Kysely<DB>({
-    dialect: dialect,
-    plugins: [new CamelCasePlugin()],
-  });
+  const db = createDb();
 
   const newPost = await db
     .insertInto("posts")
@@ -25,8 +23,5 @@ export async function createPost(content: string) {
 
   console.log(newPost);
 
-
   redirect(`/post/${newPost.id}`); //redirect to newly created post
-
-
 }

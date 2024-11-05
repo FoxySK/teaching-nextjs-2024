@@ -1,7 +1,5 @@
-import { CamelCasePlugin, Kysely } from "kysely";
-import { DB } from "../../../lib/db-types";
-import { dialect } from "../../../lib/db";
 import { NewCommentForm } from "./newCommentForm";
+import { createDb } from "../../../lib/createDb"; // const db = createDb();
 
 type Props = { params: { id: string } };
 
@@ -14,10 +12,7 @@ export default async function PostDetail(props: Props) {
     return <div>Error: Invalid ID</div>;
   }
 
-  const db = new Kysely<DB>({
-    dialect: dialect,
-    plugins: [new CamelCasePlugin()],
-  });
+  const db = createDb();
 
   const postWithUser = await db
     .selectFrom("posts")

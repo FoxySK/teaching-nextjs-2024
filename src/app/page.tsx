@@ -1,13 +1,8 @@
-import { CamelCasePlugin, Kysely } from "kysely";
-import { DB } from "../lib/db-types";
-import { dialect } from "../lib/db";
+import { createDb } from "../lib/createDb"; // const db = createDb();
 import Link from "next/link";
 
 export default async function Home() {
-  const db = new Kysely<DB>({
-    dialect: dialect,
-    plugins: [new CamelCasePlugin()],
-  });
+  const db = createDb();
 
   const posts = await db
     .selectFrom("posts")
@@ -24,8 +19,10 @@ export default async function Home() {
               <p>{p.content}</p>
               <p>{new Date(p.createdAt).toString()}</p>
               <p>
-                {p.userId}
-                {p.userId === 1 ? " *" : ""}
+                <Link href={`/user/${p.userId}`}>
+                  {p.userId}
+                  {p.userId === 1 ? " *" : ""}
+                </Link>
               </p>
             </div>
           </Link>

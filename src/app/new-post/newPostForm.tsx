@@ -17,13 +17,9 @@ export function NewPostForm() {
       onSubmit={handleSubmit((data) => {
         console.log(data);
         createPost(data.content);
-        // e.preventDefault();
-        // console.log(e.target[0].value);
-        // createPost(e.target[0].value);
       })}
     >
       <textarea
-        // id="content"
         {...register("content")}
         className="textarea textarea-bordered"
         placeholder="Text ..."
